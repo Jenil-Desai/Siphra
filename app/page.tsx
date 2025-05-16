@@ -1,65 +1,51 @@
-"use client"
-
-import { useState } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ModeToggle } from "@/components/ui/mode-toggler"
-import { Trash2, RefreshCw, Key } from "lucide-react"
-import KeyCard from "@/components/section/KeyCard"
-import { KeyPair } from "@/types/keypair"
+import { ArrowRight } from "lucide-react"
 
-export default function KeyGenerator() {
-  const [keys, setKeys] = useState<KeyPair[]>([])
-  const [isGenerating, setIsGenerating] = useState(false)
-
+export default function Home() {
   return (
-    <div className="p-4 md:p-8">
-      <div className="container mx-auto max-w-4xl">
-        <header className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-2">
-            <Key className="h-6 w-6" />
-            <h1 className="text-2xl font-bold">Siphra</h1>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
           </div>
-          <ModeToggle />
-        </header>
 
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Generate Cryptographic Keys</CardTitle>
-            <CardDescription>
-              Create secure private and public keys with a passphrase for your cryptographic needs
-            </CardDescription>
-          </CardHeader>
-          <CardFooter className="flex justify-between">
-            <Button disabled={isGenerating} className="gap-2">
-              {isGenerating ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Key className="h-4 w-4" />}
-              Generate New Keys
-            </Button>
-            <Button variant="destructive" disabled={keys.length === 0} className="gap-2">
-              <Trash2 className="h-4 w-4" />
-              Delete All Keys
-            </Button>
-          </CardFooter>
-        </Card>
-
-        {keys.length > 0 ? (
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold">Your Keys ({keys.length})</h2>
-            {keys.map((keyPair) => (
-              <KeyCard keyPair={keyPair} key={keyPair.id} />
-            ))}
-          </div>
-        ) : (
-          <Card className="bg-muted/50">
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Key className="h-12 w-12 mb-4 opacity-50" />
-              <p className="text-center text-muted-foreground">
-                No keys generated yet. Click the "Generate New Keys" button to create your first key pair.
+          <div className="container mx-auto px-4 py-20 md:py-32">
+            <div className="max-w-3xl mx-auto text-center mb-12">
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Secure Blockchain Key Generation</h1>
+              <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+                Generate cryptographic keys for your blockchain applications with our secure, easy-to-use platform.
+                Choose your blockchain and get started.
               </p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/generate/solana">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto gap-2 bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800"
+                  >
+                    <span>Solana</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link href="/generate/ethereum">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto gap-2 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
+                  >
+                    <span>Ethereum</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   )
 }

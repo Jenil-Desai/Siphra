@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-background mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center mt-8 pt-8">
+    <footer className="border-t bg-background mx-auto px-4 py-8 flex justify-between items-center mt-8 pt-8 w-full">
       <p className="text-sm text-muted-foreground mb-4 md:mb-0">
         Made by <Link href="https://github.com/Jenil-Desai" className="text-muted-foreground hover:text-foreground transition-colors underline">Jenil Desai</Link>
       </p>
