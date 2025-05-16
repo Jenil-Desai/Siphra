@@ -1,9 +1,9 @@
+import Footer from "@/components/globals/Footer";
+import Navbar from "@/components/globals/NavigationBar";
+import Providers from "@/components/Providers";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
-import Navbar from "@/components/globals/NavigationBar";
-import Footer from "@/components/globals/Footer";
 
 export const metadata: Metadata = {
   title: "Siphra",
@@ -15,12 +15,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`min-h-screen flex flex-col`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <Providers>
           <Navbar />
           <Toaster />
           <main className="flex-grow">{children}</main>
           <Footer />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

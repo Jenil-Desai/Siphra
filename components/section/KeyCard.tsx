@@ -44,18 +44,6 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
               </Button>
             </div>
           </TabsContent>
-          <TabsContent value="passphrase" className="mt-2">
-            <div className="relative">
-              <div className="bg-muted p-3 rounded-md font-mono text-sm break-all">{keyPair.passphrase}</div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-1 right-1"
-              >
-                <Copy className="h-4 w-4" />
-              </Button>
-            </div>
-          </TabsContent>
         </Tabs>
       </CardContent>
       <CardFooter>
