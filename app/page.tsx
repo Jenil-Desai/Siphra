@@ -13,7 +13,7 @@ export default function KeyGenerator() {
   const [isGenerating, setIsGenerating] = useState(false)
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="p-4 md:p-8">
       <div className="container mx-auto max-w-4xl">
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-2">

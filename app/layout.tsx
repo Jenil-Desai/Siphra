@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import Navbar from "@/components/globals/NavigationBar";
+import Footer from "@/components/globals/Footer";
 
 export const metadata: Metadata = {
   title: "Siphra",
@@ -14,8 +16,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Navbar />
           <Toaster />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
