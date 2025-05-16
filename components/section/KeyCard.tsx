@@ -1,12 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Blockchain } from "@/types/blockchain";
 import { KeyPair } from "@/types/keypair";
+import clearFromLocalStorage from "@/utils/clearFromLocalStorage";
 import { Copy, Trash2 } from "lucide-react";
 
-export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
+export default function KeyCard({ keyPair, blockchain }: { keyPair: KeyPair, blockchain: Blockchain }) {
+
+  function handleDelete() {
+    clearFromLocalStorage(keyPair.id, blockchain);
+  }
+
+  function handleCopy(type: "private" | "public") {
+    navigator.clipboard.writeText(type === "private" ? keyPair.privateKey : keyPair.publicKey);
+  }
+
   return (
-    <Card className="overflow-hidden">
+    <Card>
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">Key Pair</CardTitle>
         <CardDescription>
@@ -15,10 +26,9 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
       </CardHeader>
       <CardContent className="pb-2">
         <Tabs defaultValue="private" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="private">Private Key</TabsTrigger>
             <TabsTrigger value="public">Public Key</TabsTrigger>
-            <TabsTrigger value="passphrase">Passphrase</TabsTrigger>
           </TabsList>
           <TabsContent value="private" className="mt-2">
             <div className="relative">
@@ -27,6 +37,7 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
                 variant="ghost"
                 size="icon"
                 className="absolute top-1 right-1"
+                onClick={() => handleCopy("private")}
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -39,6 +50,7 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
                 variant="ghost"
                 size="icon"
                 className="absolute top-1 right-1"
+                onClick={() => handleCopy("public")}
               >
                 <Copy className="h-4 w-4" />
               </Button>
@@ -47,7 +59,7 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
         </Tabs>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" className="ml-auto gap-2">
+        <Button variant="outline" size="sm" className="ml-auto gap-2" onClick={handleDelete}>
           <Trash2 className="h-4 w-4" />
           Delete
         </Button>
