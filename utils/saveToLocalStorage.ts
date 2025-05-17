@@ -1,7 +1,7 @@
 import { currentBlockchain, store } from "@/store/store";
 import { KeyPair } from "@/types/keypair";
 
-export default function useSaveToLocalStorage(keypair: KeyPair) {
+export default function saveToLocalStorage(keypair: KeyPair) {
   const blockchain = store.get(currentBlockchain);
 
   if (!blockchain) {

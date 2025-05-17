@@ -1,7 +1,7 @@
 import { currentBlockchain, store } from "@/store/store";
 import { KeyPair } from "@/types/keypair";
 
-export default function useClearFromLocalStorage(id: string) {
+export default function clearFromLocalStorage(id: string) {
   const blockchain = store.get(currentBlockchain);
 
   if (!blockchain) {

@@ -1,6 +1,6 @@
 import { currentBlockchain, store } from "@/store/store";
 
-export default function useClearaLLFromLocalStorage() {
+export default function clearAllFromLocalStorage() {
   const blockchain = store.get(currentBlockchain);
 
   if (!blockchain) {

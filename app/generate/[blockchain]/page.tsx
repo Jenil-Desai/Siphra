@@ -7,6 +7,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { currentBlockchain } from "@/store/store";
 import { Blockchain } from "@/types/blockchain";
 import { KeyPair } from "@/types/keypair";
+import clearAllFromLocalStorage from "@/utils/clearAllFromLocalStorage";
 import getFromLocalStorage from "@/utils/getFromLocalStorage";
 import { useSetAtom } from "jotai";
 import { Key } from "lucide-react";
@@ -15,15 +16,15 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
+  const [keypairs, setKeyPairs] = useState<KeyPair[]>([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const setCurrentblockchain = useSetAtom(currentBlockchain);
   const params = useParams<{ blockchain: Blockchain }>();
+
   const blockchain = params.blockchain;
   if (!Object.values(Blockchain).includes(blockchain)) {
     notFound()
   }
-
-  const [keypairs, setKeyPairs] = useState<KeyPair[]>([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function getKeyPairs() {
     try {
@@ -46,6 +47,12 @@ export default function Page() {
     return () => clearInterval(interval);
   }, [blockchain]);
 
+  const handleClearAll = () => {
+    clearAllFromLocalStorage();
+    setKeyPairs([]);
+    toast.success('All keys cleared successfully');
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow container mx-auto px-4 py-12">
@@ -53,7 +60,7 @@ export default function Page() {
           <h1 className="text-3xl md:text-4xl font-bold mb-6">{blockchain} Keys</h1>
           <div className="space-x-2">
             <Button variant={"default"} size="lg" onClick={() => setIsMenuOpen(true)}>Generate</Button>
-            <Button variant="destructive" size="lg">Clear All Keys</Button>
+            <Button variant="destructive" size="lg" onClick={() => handleClearAll()}>Clear All Keys</Button>
           </div>
         </div>
         {keypairs.length > 0 ? (
