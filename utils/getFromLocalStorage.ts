@@ -27,3 +27,8 @@ export default function getFromLocalStorage() {
     throw new Error('Failed to retrieve keypairs from local storage');
   }
 }
+
+export function getLenghtFromLocalStorage() {
+  const keypairs = getFromLocalStorage();
+  return keypairs.length;
+}

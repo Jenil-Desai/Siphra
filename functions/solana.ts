@@ -3,6 +3,7 @@ import { getMnemonic } from "./seed";
 import * as bip39 from "bip39";
 import { derivePath } from "ed25519-hd-key"
 import { v4 as uuidv4 } from "uuid";
+import { getLenghtFromLocalStorage } from "@/utils/getFromLocalStorage";
 
 type generateSolanaKeyPairReturnType = {
   publicKey: string;
@@ -13,8 +14,9 @@ type generateSolanaKeyPairReturnType = {
 export function generateSolanaKeyPair(): generateSolanaKeyPairReturnType {
   const mnemonic = getMnemonic();
   const seed = bip39.mnemonicToSeedSync(mnemonic);
+  const totalKeyPairs = getLenghtFromLocalStorage();
 
-  const derivedSeed = derivePath("m/44'/501'/0'/0'", seed.toString('hex')).key;
+  const derivedSeed = derivePath(`m/44'/501'/${totalKeyPairs + 1}'/0'`, seed.toString('hex')).key;
 
   const keypair = Keypair.fromSeed(new Uint8Array(derivedSeed));
 

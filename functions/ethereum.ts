@@ -1,6 +1,9 @@
-import { ethers } from 'ethers';
-import { getMnemonic } from '@/functions/seed';
 import { v4 as uuidv4 } from 'uuid';
+import { getLenghtFromLocalStorage } from '@/utils/getFromLocalStorage';
+import { derivePath } from 'ed25519-hd-key';
+import { getMnemonic } from './seed';
+import { mnemonicToSeedSync } from 'bip39';
+import { ethers } from 'ethers';
 
 type EthereumKeyPair = {
   id: string;
@@ -9,11 +12,16 @@ type EthereumKeyPair = {
 }
 
 export function generateEthereumKeyPair(): EthereumKeyPair {
-  const pharse = getMnemonic();
-  const wallet = ethers.Wallet.fromPhrase(pharse);
+  const mnemonic = getMnemonic();
+  const seed = mnemonicToSeedSync(mnemonic);
+  const totalKeyPairs = getLenghtFromLocalStorage();
 
-  const privateKey = wallet.privateKey;
+  const { key: deriveSeed } = derivePath(`m/44'/60'/${totalKeyPairs + 1}'/0'`, seed.toString("hex"));
+  const privateKey = Buffer.from(deriveSeed).toString("hex");
+
+  const wallet = new ethers.Wallet(privateKey);
   const publicKey = wallet.address;
+
   const id = uuidv4();
 
   return {
