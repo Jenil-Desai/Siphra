@@ -1,6 +1,7 @@
 "use client"
 import AddKeyPairDialog from "@/components/section/AddKeyPairDialog";
 import KeyCard from "@/components/section/KeyCard";
+import Mnemonic from "@/components/section/Mnemonic";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -55,7 +56,8 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-grow container mx-auto px-4 py-12">
+      <main className="flex-grow container mx-auto px-4 py-12 space-y-4">
+        <Mnemonic />
         <div className="flex justify-between items-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-6">{blockchain} Keys</h1>
           <div className="space-x-2">
