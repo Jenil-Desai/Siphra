@@ -12,6 +12,7 @@ import { KeyPair } from "@/types/keypair";
 import saveToLocalStorage from "@/utils/saveToLocalStorage";
 import { useAtomValue } from "jotai";
 import { currentBlockchain } from "@/store/store";
+import { generateEthereumKeyPair } from "@/functions/ethereum";
 
 interface AddKeyPairDialogProps {
   setIsOpen: (open: boolean) => void;
@@ -42,6 +43,13 @@ export default function AddKeyPairDialog({ setIsOpen, getKeyPairs }: AddKeyPairD
         break;
       }
       case Blockchain.Ethereum: {
+        const keypair = generateEthereumKeyPair();
+        keypairData = {
+          id: keypair.id,
+          name: data.name,
+          publicKey: keypair.publicKey,
+          privateKey: keypair.privateKey,
+        };
         break;
       }
     }
