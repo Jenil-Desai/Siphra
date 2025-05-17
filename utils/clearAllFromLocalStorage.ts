@@ -1,6 +1,13 @@
-import { Blockchain } from "@/types/blockchain";
+import { currentBlockchain, store } from "@/store/store";
 
-export default function clearaLLFromLocalStorage(blockchain: Blockchain) {
+export default function useClearaLLFromLocalStorage() {
+  const blockchain = store.get(currentBlockchain);
+
+  if (!blockchain) {
+    throw new Error('Blockchain is not set');
+    return;
+  }
+
   try {
     localStorage.removeItem(blockchain.toString());
   } catch (error) {

@@ -4,15 +4,18 @@ import KeyCard from "@/components/section/KeyCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { currentBlockchain } from "@/store/store";
 import { Blockchain } from "@/types/blockchain";
 import { KeyPair } from "@/types/keypair";
 import getFromLocalStorage from "@/utils/getFromLocalStorage";
+import { useSetAtom } from "jotai";
 import { Key } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
+  const setCurrentblockchain = useSetAtom(currentBlockchain);
   const params = useParams<{ blockchain: Blockchain }>();
   const blockchain = params.blockchain;
   if (!Object.values(Blockchain).includes(blockchain)) {
@@ -33,6 +36,7 @@ export default function Page() {
   }
 
   useEffect(() => {
+    setCurrentblockchain(blockchain);
     getKeyPairs();
 
     const interval = setInterval(() => {
@@ -54,7 +58,7 @@ export default function Page() {
         </div>
         {keypairs.length > 0 ? (
           <div className="space-y-5">
-            {keypairs.map((keypair, index) => <KeyCard blockchain={blockchain} key={index} keyPair={keypair} />)}
+            {keypairs.map((keypair, index) => <KeyCard key={index} keyPair={keypair} />)}
           </div>
         ) : (
           <Card className="bg-muted/50">
@@ -70,7 +74,7 @@ export default function Page() {
       </main >
       <Dialog open={isMenuOpen} onOpenChange={setIsMenuOpen}>
         <DialogContent>
-          <AddKeyPairDialog blockchain={blockchain} setIsOpen={setIsMenuOpen} />
+          <AddKeyPairDialog setIsOpen={setIsMenuOpen} />
         </DialogContent>
       </Dialog>
     </div >

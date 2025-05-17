@@ -1,7 +1,14 @@
-import { Blockchain } from "@/types/blockchain";
+import { currentBlockchain, store } from "@/store/store";
 import { KeyPair } from "@/types/keypair";
 
-export default function getFromLocalStorage(blockchain: Blockchain) {
+export default function useGetFromLocalStorage() {
+  const blockchain = store.get(currentBlockchain);
+
+  if (!blockchain) {
+    throw new Error('Blockchain is not set');
+    return;
+  }
+
   try {
     const existingKeyPairs = localStorage.getItem(blockchain.toString());
     let keyPairs: KeyPair[] = [];

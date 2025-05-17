@@ -1,15 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Blockchain } from "@/types/blockchain";
 import { KeyPair } from "@/types/keypair";
 import clearFromLocalStorage from "@/utils/clearFromLocalStorage";
 import { Copy, Trash2 } from "lucide-react";
 
-export default function KeyCard({ keyPair, blockchain }: { keyPair: KeyPair, blockchain: Blockchain }) {
+export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
 
   function handleDelete() {
-    clearFromLocalStorage(keyPair.id, blockchain);
+    clearFromLocalStorage(keyPair.id);
   }
 
   function handleCopy(type: "private" | "public") {

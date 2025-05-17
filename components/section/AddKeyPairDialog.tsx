@@ -10,13 +10,15 @@ import { toast } from "sonner";
 import { generateSolanaKeyPair } from "@/functions/solana";
 import { KeyPair } from "@/types/keypair";
 import saveToLocalStorage from "@/utils/saveToLocalStorage";
+import { useAtomValue } from "jotai";
+import { currentBlockchain } from "@/store/store";
 
 interface AddKeyPairDialogProps {
   setIsOpen: (open: boolean) => void;
-  blockchain: Blockchain;
 }
 
-export default function AddKeyPairDialog({ setIsOpen, blockchain }: AddKeyPairDialogProps) {
+export default function AddKeyPairDialog({ setIsOpen }: AddKeyPairDialogProps) {
+  const blockchain = useAtomValue(currentBlockchain);
   const form = useForm({
     resolver: zodResolver(addKeyPairSchema),
     defaultValues: {
@@ -49,7 +51,7 @@ export default function AddKeyPairDialog({ setIsOpen, blockchain }: AddKeyPairDi
     }
 
     try {
-      saveToLocalStorage(blockchain, keypairData);
+      saveToLocalStorage(keypairData);
       toast.success("Keypair added successfully");
       setIsOpen(false);
     } catch (error) {
