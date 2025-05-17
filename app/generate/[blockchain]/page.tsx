@@ -2,20 +2,19 @@
 import AddKeyPairDialog from "@/components/section/AddKeyPairDialog";
 import KeyCard from "@/components/section/KeyCard";
 import { Button } from "@/components/ui/button";
-import { CardContent, Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Blockchain } from "@/types/blockchain";
 import { KeyPair } from "@/types/keypair";
 import getFromLocalStorage from "@/utils/getFromLocalStorage";
 import { Key } from "lucide-react";
-import { notFound } from "next/navigation";
-import { Usable, useEffect, useState } from "react";
-import { use } from "react";
+import { notFound, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function GeneratePage({ params }: { params: Usable<{ blockchain: Blockchain }> }) {
-  const unwrappedParams = use<{ blockchain: Blockchain }>(params);
-  const blockchain = unwrappedParams.blockchain;
+export default function Page() {
+  const params = useParams<{ blockchain: Blockchain }>();
+  const blockchain = params.blockchain;
   if (!Object.values(Blockchain).includes(blockchain)) {
     notFound()
   }
@@ -62,7 +61,7 @@ export default function GeneratePage({ params }: { params: Usable<{ blockchain: 
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Key className="h-12 w-12 mb-4 opacity-50" />
               <p className="text-center text-muted-foreground">
-                No keys generated yet. Click the "Generate New Keys" button to create your first key pair.
+                No keys generated yet. Click the &quot;Generate&quot; button to create your first key pair.
               </p>
             </CardContent>
           </Card>
