@@ -27,7 +27,7 @@ export default function Page() {
 
   function getKeyPairs() {
     try {
-      const existingKeyPairs = getFromLocalStorage(blockchain);
+      const existingKeyPairs = getFromLocalStorage();
       setKeyPairs(existingKeyPairs);
     } catch (error) {
       console.error('Failed to fetch keypairs:', error);

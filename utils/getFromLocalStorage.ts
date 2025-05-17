@@ -6,7 +6,6 @@ export default function useGetFromLocalStorage() {
 
   if (!blockchain) {
     throw new Error('Blockchain is not set');
-    return;
   }
 
   try {
