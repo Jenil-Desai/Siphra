@@ -1,11 +1,14 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KeyPair } from "@/types/keypair";
 import clearFromLocalStorage from "@/utils/clearFromLocalStorage";
-import { Copy, Trash2 } from "lucide-react";
+import { Copy, Eye, EyeOff, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
+  const [isPrivateKeyVisible, setIsPrivateKeyVisible] = useState(false);
 
   function handleDelete() {
     clearFromLocalStorage(keyPair.id);
@@ -14,6 +17,8 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
   function handleCopy(type: "private" | "public") {
     navigator.clipboard.writeText(type === "private" ? keyPair.privateKey : keyPair.publicKey);
   }
+
+  const togglePrivateKeyVisibility = () => setIsPrivateKeyVisible(prev => !prev);
 
   return (
     <Card>
@@ -31,15 +36,26 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
           </TabsList>
           <TabsContent value="private" className="mt-2">
             <div className="relative">
-              <div className="bg-muted p-3 rounded-md font-mono text-sm break-all">{keyPair.privateKey}</div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-1 right-1"
-                onClick={() => handleCopy("private")}
-              >
-                <Copy className="h-4 w-4" />
-              </Button>
+              <div className="bg-muted p-3 rounded-md font-mono text-sm break-all">
+                {isPrivateKeyVisible ? keyPair.privateKey : "*".repeat(keyPair.privateKey.length / 2)}
+              </div>
+              <div className="absolute top-1 right-1 flex space-x-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={togglePrivateKeyVisibility}
+                  title={isPrivateKeyVisible ? "Hide private key" : "Show private key"}
+                >
+                  {isPrivateKeyVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleCopy("private")}
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </TabsContent>
           <TabsContent value="public" className="mt-2">
