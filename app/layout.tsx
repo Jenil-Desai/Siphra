@@ -17,7 +17,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`min-h-screen flex flex-col`}>
         <Providers>
           <Navbar />
-          <Toaster />
+          <Toaster closeButton={true} richColors={true} />
           <main className="flex-grow">{children}</main>
           <Footer />
         </Providers>
