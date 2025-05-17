@@ -6,12 +6,21 @@ import { KeyPair } from "@/types/keypair";
 import clearFromLocalStorage from "@/utils/clearFromLocalStorage";
 import { Copy, Eye, EyeOff, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
-export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
+export default function KeyCard({ keyPair, getKeyPair }: { keyPair: KeyPair, getKeyPair: () => void }) {
   const [isPrivateKeyVisible, setIsPrivateKeyVisible] = useState(false);
 
   function handleDelete() {
-    clearFromLocalStorage(keyPair.id);
+    console.log("Inside Function")
+    try {
+      clearFromLocalStorage(keyPair.id);
+      toast.success("Keypair deleted successfully");
+      getKeyPair();
+    } catch (error) {
+      console.error("Failed to delete keypair:", error);
+      toast.error("Failed to delete keypair");
+    }
   }
 
   function handleCopy(type: "private" | "public") {
@@ -74,7 +83,7 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
         </Tabs>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" className="ml-auto gap-2" onClick={handleDelete}>
+        <Button variant="destructive" size="sm" className="ml-auto gap-2" onClick={handleDelete}>
           <Trash2 className="h-4 w-4" />
           Delete
         </Button>

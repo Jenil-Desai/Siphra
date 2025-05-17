@@ -23,7 +23,7 @@ export default function clearFromLocalStorage(id: string) {
     }
 
     keyPairs = keyPairs.filter((keypair: KeyPair) => keypair.id !== id);
-    localStorage.setItem("keypairs", JSON.stringify(keyPairs));
+    localStorage.setItem(blockchain.toString(), JSON.stringify(keyPairs));
   } catch (error) {
     console.error('Failed to save keypair to local storage:', error);
     throw new Error('Failed to save keypair to local storage');

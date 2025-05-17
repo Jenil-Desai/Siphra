@@ -67,7 +67,7 @@ export default function Page() {
         </div>
         {keypairs.length > 0 ? (
           <div className="space-y-5">
-            {keypairs.map((keypair, index) => <KeyCard key={index} keyPair={keypair} />)}
+            {keypairs.map((keypair, index) => <KeyCard key={index} keyPair={keypair} getKeyPair={getKeyPairs} />)}
           </div>
         ) : (
           <Card className="bg-muted/50">
