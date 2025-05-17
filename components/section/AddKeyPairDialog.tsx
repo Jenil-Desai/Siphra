@@ -15,9 +15,10 @@ import { currentBlockchain } from "@/store/store";
 
 interface AddKeyPairDialogProps {
   setIsOpen: (open: boolean) => void;
+  getKeyPairs: () => void;
 }
 
-export default function AddKeyPairDialog({ setIsOpen }: AddKeyPairDialogProps) {
+export default function AddKeyPairDialog({ setIsOpen, getKeyPairs }: AddKeyPairDialogProps) {
   const blockchain = useAtomValue(currentBlockchain);
   const form = useForm({
     resolver: zodResolver(addKeyPairSchema),
@@ -53,6 +54,7 @@ export default function AddKeyPairDialog({ setIsOpen }: AddKeyPairDialogProps) {
     try {
       saveToLocalStorage(keypairData);
       toast.success("Keypair added successfully");
+      getKeyPairs();
       setIsOpen(false);
     } catch (error) {
       console.error(error);

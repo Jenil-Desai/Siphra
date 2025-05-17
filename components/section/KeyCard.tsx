@@ -23,7 +23,7 @@ export default function KeyCard({ keyPair }: { keyPair: KeyPair }) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Key Pair</CardTitle>
+        <CardTitle className="text-lg">{keyPair.name}</CardTitle>
         <CardDescription>
           Generated on {new Date(Number.parseInt(keyPair.id)).toLocaleString()}
         </CardDescription>

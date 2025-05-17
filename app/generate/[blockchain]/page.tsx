@@ -83,7 +83,7 @@ export default function Page() {
       </main >
       <Dialog open={isMenuOpen} onOpenChange={setIsMenuOpen}>
         <DialogContent>
-          <AddKeyPairDialog setIsOpen={setIsMenuOpen} />
+          <AddKeyPairDialog setIsOpen={setIsMenuOpen} getKeyPairs={getKeyPairs} />
         </DialogContent>
       </Dialog>
     </div >
